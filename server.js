@@ -51,10 +51,34 @@ const RESTAURANT = {
     ]
   }
 
-  
+//pokemon exercise 21 helped me with this one
+const groupedByCategory = (arr) => {
+    return arr.reduce((accumulator, currentItem) => {
+        const category = currentItem.category
+
+        //initialize the accumulator if it hasnt been
+        if(!accumulator[category]) accumulator[category] = []
+
+        //if it exist then simply put the current item
+        accumulator[category].push(currentItem)
+
+        return accumulator
+
+    }, {})
+}
+
+const groupedByCategoryObjects = groupedByCategory(RESTAURANT.menu)
+
+//so i can get the key names
+// console.log(Object.keys(groupedByCategoryObjects))
+// console.log(Object.values(groupedByCategoryObjects))
 
 app.get('/', (req, res) => {
   res.render('home.ejs', { restaurant: RESTAURANT });
 });
+
+app.get('/menu', (req, res) => {
+    res.render('menu.ejs', { menu: groupedByCategoryObjects})
+})
 
 app.listen(3000);
