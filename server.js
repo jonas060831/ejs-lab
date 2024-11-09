@@ -85,6 +85,7 @@ app.get('/menu/:category', (req, res) => {
     const { category } = req.params
 
     //if the category does NOT exist in the groupedByCategoryObjects do a guard let
+    //https://coreui.io/blog/how-to-check-if-a-key-exists-in-javascript-object/#:~:text=The%20in%20Operator%3A%20A%20Preliminary%20Check,-One%20of%20the&text=To%20verify%20the%20presence%20of,and%20effective%20for%20quick%20checks.
     const message = `Category:${category.charAt(0).toUpperCase() + category.slice(1)} is not yet in our Menu`
     if( !(category in groupedByCategoryObjects)) return res.render('notyet.ejs', {message})
          
