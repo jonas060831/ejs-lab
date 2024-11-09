@@ -3,39 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Menu</title>
+
+  <!-- i use the method 1 https://coreui.io/blog/how-to-capitalize-the-first-letter-in-javascript/#:~:text=It%20does%20this%20by%20using,convert%20this%20character%20to%20uppercase. -->
+  <title><%= category.charAt(0).toUpperCase() + category.slice(1) %></title>
+  
   <style>
     span {
         font-weight: bolder;
     }
     /* this helps me capitalize the first letter of the h2 https://stackoverflow.com/questions/5577364/make-the-first-character-uppercase-in-css */
-    h2:first-letter {
+    h1:first-letter {
         text-transform: capitalize; 
     }
   </style>
 </head>
 <body>
     <%- include('./partials/nav') %>
-    <h1>Full Menu</h1>
+    <h1><%= category%></h1>
 
-  <!-- i need to figure out how to show the title key and the array that is grouped by category this helps me
-  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries -->
-  <ul>
-    <% for( const [meal_course_title, course_items] of Object.entries(menu)) { %>
-        <!-- show what is the key name of the array -->
-        <h2><%= meal_course_title%></h2>
-        <!-- then loop thru all the values of the array -->
-        <% course_items.forEach(item => { %>
+    <ul> 
+        <% menuItems.forEach(item => { %>
             <li>
                 <span>NAME:</span> <%= item.name %> <br>
                 <span>PRICE:</span> <%= item.price %> <br>
                 <span>RATING:</span> <%= item.rating.toFixed(2) %> <br>
                 <span>DETAILS:</span> <%= item.details %> <br>
             </li>
-            <br>
         <% }) %>
-    <% }%>
-  </ul>
+    </ul>
+
   
   
 </body>

@@ -74,11 +74,43 @@ const groupedByCategoryObjects = groupedByCategory(RESTAURANT.menu)
 // console.log(Object.values(groupedByCategoryObjects))
 
 app.get('/', (req, res) => {
-  res.render('home.ejs', { restaurant: RESTAURANT });
+  return res.render('home.ejs', { restaurant: RESTAURANT });
 });
 
 app.get('/menu', (req, res) => {
-    res.render('menu.ejs', { menu: groupedByCategoryObjects})
+    return res.render('menu.ejs', { menu: groupedByCategoryObjects})
+})
+
+app.get('/menu/:category', (req, res) => {
+    const { category } = req.params
+
+    //if the category does NOT exist in the groupedByCategoryObjects do a guard let
+    const message = `Category:${category.charAt(0).toUpperCase() + category.slice(1)} is not yet in our Menu`
+    if( !(category in groupedByCategoryObjects)) return res.render('notyet.ejs', {message})
+         
+
+    //provide only the menu base on the category from the params
+    //sorry if i did not use the for loop or the .filter() method instead
+    //i utilized my existing groupedByCategory on line 70 and just simply call the object and its array value
+    //like so { mains: [{name: '', price: ... etc}] }
+    const menuItems = groupedByCategoryObjects[category]
+
+    //but here is using the .filter()
+    const menuItems2 = RESTAURANT.menu.filter( item => item.category === category )
+    //this will contain the same thing as line 96 or null
+    //console.log(menuItems2)
+
+    //using for loop
+    const menuItems3 = []
+    for (let index = 0; index < RESTAURANT.menu.length; index++) {
+        const element = RESTAURANT.menu[index];
+
+        if(element.category === category) menuItems3.push(element)
+        
+    }
+    //console.log(menuItems3)
+
+    return res.render('category.ejs', { menuItems, category })
 })
 
 app.listen(3000);
