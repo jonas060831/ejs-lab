@@ -27,7 +27,7 @@
         <!-- then loop thru all the values of the array -->
         <% course_items.forEach(item => { %>
             <li>
-                <span>NAME:</span> <%= item.name %> <br>
+                <span>NAME:</span> <%= item.name %> <%= item.rating >= 5 ? '⭐' : ''%> <br>
                 <span>PRICE:</span> <%= item.price %> <br>
                 <span>RATING:</span> <%= item.rating.toFixed(2) %> <br>
                 <span>DETAILS:</span> <%= item.details %> <br>
